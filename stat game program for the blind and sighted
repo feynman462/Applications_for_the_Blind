@@ -1,0 +1,101 @@
+import pyttsx3
+import random
+import sys
+
+# Initialize the text-to-speech engine
+try:
+    engine = pyttsx3.init()
+    engine.setProperty('rate', 150) # Set speech speed
+except ImportError:
+    print("Requested speech engine not found.")
+    sys.exit()
+except RuntimeError:
+    print("Speech engine could not be initialized.")
+    sys.exit()
+
+last_spoken_text = ""
+
+def speak_and_print(text):
+    global last_spoken_text
+    print(text)
+    engine.say(text)
+    engine.runAndWait()
+    last_spoken_text = text
+
+def user_input(prompt):
+    speak_and_print(prompt)
+    user_response = input().strip() 
+    if user_response:
+        engine.say("You entered " + user_response)
+        engine.runAndWait()
+    else:
+        speak_and_print("You didn't enter anything. Please try again.")
+        user_response = user_input(prompt)
+    return user_response
+
+def repeat():
+    engine.say(last_spoken_text)
+    engine.runAndWait()
+
+def math_challenge(score):
+    speak_and_print("\nWelcome to the Math Challenge!")
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
+    op = random.choice(["+", "-", "*"])
+    answer = eval(str(num1) + op + str(num2))
+    guess = user_input(f"What is {num1} {op} {num2}? ")
+    if guess.isdigit() and int(guess) == answer:
+        speak_and_print("Congratulations! That's correct.")
+        score += 1
+    else:
+        speak_and_print(f"That's incorrect. The correct answer was: {answer}")
+    return score
+
+def choose_game(phrases, score):
+    while True:
+        speak_and_print(f"\nYour current score is {score}. Which game do you want to play? 1 for Predictive Text Game, 2 for Statistical Puzzle Game, 3 for Math Challenge. Press 'R' to repeat the last message.")
+        game_choice = user_input("Enter your choice: ")
+        if game_choice == "1":
+            score = predictive_text_game(phrases, score)
+            return "1", score
+        elif game_choice == "2":
+            score = statistical_puzzle_game(score)
+            return "2", score
+        elif game_choice == "3":
+            score = math_challenge(score)
+            return "3", score
+        elif game_choice.lower() == 'r':
+            repeat()
+        else:
+            speak_and_print("Invalid choice. Please select either 1, 2 or 3 or press 'R' to repeat the last message.")
+
+def play_again(phrases, score):
+    while True:
+        speak_and_print("\nDo you want to play again or switch games? Press 'Y' to play again, 'S' to switch games, 'N' to quit. Press 'R' to repeat the last message.")
+        play_again_choice = user_input("Enter your choice: ")
+        if play_again_choice.lower() == 'y' or play_again_choice.lower() == 's':
+            return True
+        elif play_again_choice.lower() == 'n':
+            speak_and_print(f"\nThank you for playing! Your final score was {score}. Goodbye.")
+            return False
+        elif play_again_choice.lower() == 'r':
+            repeat()
+        else:
+            speak_and_print("\nInvalid choice. Please press 'Y' for Yes, 'N' for No or 'R' to repeat the last message.")
+
+phrases = ["The cat in the hat", "Once upon a time", "In a galaxy far, far away"]
+
+score = 0
+game_choice = "1"
+
+speak_and_print("Welcome! Ready to test your predicting, logical and mathematical skills?")
+
+while True:
+    try:
+        game_choice, score = choose_game(phrases, score)
+        if not play_again(phrases, score):
+            break
+        game_choice = str((int(game_choice) % 3) + 1)  # Cycle between the 3 games
+    except KeyboardInterrupt:
+        print("\nGame interrupted. Goodbye!")
+        break

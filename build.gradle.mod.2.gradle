@@ -1,0 +1,61 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+version = '1.0.0'
+group = 'com.yourname.accessible_silly_navigator'
+
+base {
+    archivesName = 'accessible_silly_navigator_with_fixed_keys'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println "Java: ${System.getProperty('java.version')}, JVM: ${System.getProperty('java.vm.version')} (${System.getProperty('java.vendor')}), Arch: ${System.getProperty('os.arch')}"
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    copyIdeResources = true
+}
+
+sourceSets.main.java.srcDirs = ['C:/minecraft_projects/src/main/java']
+sourceSets.main.resources.srcDirs = ['C:/minecraft_projects/src/main/resources']
+
+repositories {
+    maven {
+        url = 'https://maven.minecraftforge.net'
+    }
+    // You might add more repositories if you have other dependencies.
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:1.20.1-47.1" // This is based on the new information you provided
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    // ... (keep this part as it is in your original build.gradle)
+}
+
+tasks.named('jar', Jar).configure {
+    // ... (keep this part as it is in your original build.gradle)
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url = uri("${project.projectDir}/mcmodsrepo")
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

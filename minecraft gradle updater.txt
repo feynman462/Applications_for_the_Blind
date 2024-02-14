@@ -1,0 +1,81 @@
+# Define the path to your properties file
+$file = "C:\minecraft_projects\navigator_mod_2\gradle.properties"
+
+# Define values
+$minecraft_version = "1.20.1"
+$forge_version = "47.1.0"
+$mod_id = "Accessible_silly_navigator_with_fixed_keys"
+$mod_name = "Accessible_silly_navigator_with_fixed_keys"
+$mod_license = "All Rights Reserved"
+$mod_version = "1.0.0"
+$mod_group_id = "com.mydomain.Accessible_silly_navigator_with_fixed_keys"
+$mod_authors = "Lushiah"
+$mod_description = "This mod is to help blind players navigate around the minecraft map with suroundings described to the player. There is also a modification to the keyboard functions. W, A, S, D for movement (forward, left, back, right).	new keys are:  left arrow=move left,, right arrow= move right, up= move forward, and down arrow to go backward.
+Space for jump.	keep space for jump
+Shift (left) for sneak/crouch.	this is now shift down arrow
+E for inventory.	this is now  I for inventory
+1-9 for hotbar slot selection.	keep this 1-9 for hotbar slot selection.
+Esc for game menu/pause.	this is kept the same Esc for game menu/pause.
+Q to drop items.	this is now  d for drop
+F to swap items between hands.	this is now  S for swap
+R for reload (if applicable in some modded versions).	this one stays the same:
+Tab for player list (in multiplayer).	this one stays the same:
+F1-F5 for various camera perspectives and HUD toggle.	this one stays the same:
+F11 for fullscreen toggle.	this one stays the same:
+A: Strafe Left	this is now shift left arrow
+D: Strafe Right	this is now shift right arrow
+Left Ctrl: Sprint	this is now shift forward arrow
+Hotbar & Inventory:	
+1-9: Select Corresponding Hotbar Slot	this one stays the same:
+Ctrl + Q: Drop Entire Stack of Selected Item	this is now control D 
+Gameplay:	
+Right Click: Use Selected Item, Place Block	this is now shift return
+Left Click: Attack, Break Block	this is now  the return key
+Middle Click: Pick Block (in Creative Mode or with advanced tooltips enabled)	this is now shift  control return
+R: Reload (for crossbows)	this one stays the same:
+F3: Debug Screen	this one stays the same:
+F2: Take Screenshot	this one stays the same:
+T: Open Chat	this one stays the same:
+/: Directly Open Command Chat	this one stays the same:
+Esc: Pause / Game menu	this one stays the same:
+Perspective & Interface:	
+F1: Toggle HUD and hands	this one stays the same:
+F3 + H: Toggle Advanced Tooltips (Item IDs and Durability)	this one stays the same:
+F3 + B: Toggle Hitboxes	this one stays the same:
+F3 + G: Toggle Chunk Grid	this one stays the same:
+F3 + T: Reload Resource Packs	this one stays the same:
+F4: Toggle Game Mode (if cheats are enabled)	this one stays the same:
+F5: Change Camera Perspective (First person, Third person back, Third person front)	this one stays the same:
+Multiplayer:	
+Tab: List Players	this one stays the same:
+O: Toggle Player List (if it's set to always-on)	this one stays the same:
+Miscellaneous:	
+F11: Toggle Fullscreen Mode	this one stays the same:
+F3 + F4: Cycle through game modes (when cheats are on)	this one stays the same:
+Alt: Highlight Players (Spectator mode)	this one stays the same:
+F3 + N: Switch between Creative and Spectator modes (if cheats are enabled)	this one stays the same:
+Function Keys (F3 + ...):	
+F3 + A: Reload all chunks	this one stays the same:
+F3 + C: Copy location to clipboard	this one stays the same:
+F3 + D: Clear chat history	this one stays the same:
+F3 + I: Copy entity or block data to clipboard	this one stays the same:
+F3 + P: Toggle auto-pause when game loses focus	this one stays the same:
+F3 + Q: Show all F3 + key combinations	this one stays the same:
+"
+
+# Load the content
+$content = Get-Content $file
+
+# Replace content
+$content = $content -replace 'minecraft_version=\d+\.\d+\.\d+', "minecraft_version=$minecraft_version"
+$content = $content -replace 'forge_version=\d+\.\d+\.\d+', "forge_version=$forge_version"
+$content = $content -replace 'mod_id=examplemod', "mod_id=$mod_id"
+$content = $content -replace 'mod_name=Example Mod', "mod_name=$mod_name"
+$content = $content -replace 'mod_license=All Rights Reserved', "mod_license=$mod_license"
+$content = $content -replace 'mod_version=\d+\.\d+\.\d+', "mod_version=$mod_version"
+$content = $content -replace 'mod_group_id=com.example.examplemod', "mod_group_id=$mod_group_id"
+$content = $content -replace 'mod_authors=YourNameHere, OtherNameHere', "mod_authors=$mod_authors"
+$content = $content -replace 'mod_description=Example mod description.\nNewline characters can be used and will be replaced properly.', "mod_description=$mod_description"
+
+# Write the content back to the file
+$content | Set-Content $file
